@@ -19,18 +19,18 @@ public class InputView {
         scanner = new Scanner(System.in);
         System.out.println("구입 금액을 입력해 주세요.");
         double amount = 0;
-        try{
+        try {
             amount = scanner.nextInt();
             verifyPurchaseAmount(amount);
             return amount;
-        } catch (Exception e){
+        } catch (Exception e) {
             OutputView.invalidMessage();
             return inputPurchaseAmount();
         }
     }
 
     public static void verifyPurchaseAmount(double amount) throws Exception {
-        if (amount < UNIT_AMOUNT){
+        if (amount < UNIT_AMOUNT) {
             throw new Exception();
         }
     }
@@ -39,12 +39,12 @@ public class InputView {
         scanner = new Scanner(System.in);
         System.out.println("6개의 로또 번호를 입력해주세요");
         List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i < LOTTO_SIZE; i++){
+        for (int i = 0; i < LOTTO_SIZE; i++) {
             try {
                 int number = scanner.nextInt();
                 verifyLottoNumber(numbers, number);
                 numbers.add(number);
-            } catch(Exception e){
+            } catch (Exception e) {
                 OutputView.invalidMessage();
                 return inputLottoNumbers();
             }
@@ -53,8 +53,39 @@ public class InputView {
         return new Lotto(numbers);
     }
 
+    public static List<Integer> inputWinningNumbers() {
+        scanner = new Scanner(System.in);
+        System.out.println("금주의 당첨 번호를 입력해주세요");
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < LOTTO_SIZE; i++) {
+            try {
+                int number = scanner.nextInt();
+                verifyLottoNumber(numbers, number);
+                numbers.add(number);
+            } catch (Exception e) {
+                OutputView.invalidMessage();
+                return inputWinningNumbers();
+            }
+        }
+        Collections.sort(numbers);
+        return numbers;
+    }
+
+    public static int inputBonusNumber(List<Integer> winningNumbers) {
+        scanner = new Scanner(System.in);
+        System.out.println("보너스 번호를 입력해주세요");
+        try {
+            int number = scanner.nextInt();
+            verifyLottoNumber(winningNumbers, number);
+            return number;
+        } catch (Exception e) {
+            OutputView.invalidMessage();
+            return inputBonusNumber(winningNumbers);
+        }
+    }
+
     private static void verifyLottoNumber(List<Integer> numbers, int number) throws Exception {
-        if (number < LOTTO_MIN | number > LOTTO_MAX | numbers.contains(number)){
+        if (number < LOTTO_MIN | number > LOTTO_MAX | numbers.contains(number)) {
             throw new Exception();
         }
     }

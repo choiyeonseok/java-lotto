@@ -21,5 +21,11 @@ public class LottoApplication {
 
         OutputView.printLottoSet(numberOfSet, lottoSet);
 
+
+        List<Integer> winningNumbers = InputView.inputWinningNumbers();
+        int bonusNumber = InputView.inputBonusNumber(winningNumbers);
+        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonusNumber);
+
+
     }
 }
