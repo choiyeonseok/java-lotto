@@ -1,31 +1,32 @@
 package lotto;
 
 import view.InputView;
-import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class LottoGame {
     private static final int LOTTO_PRICE = 1000;
+    private static int numberOfLotto;
     private static LottoSet lottoset;
+    private static RewardRatio rewardRatio;
     private WinningNumbers winningNumbers;
 
     public LottoGame(){
         lottoset = new LottoSet();
+        rewardRatio = new RewardRatio();
     }
 
     public void play() {
-        int numberOfLotto = calculateNumberOfLotto();
+        numberOfLotto = calculateNumberOfLotto();
+
         createLottoSet(numberOfLotto);
         lottoset.printLottoSet();
 
         createWinningNumbers();
-        lottoset.calculateLottoResult(winningNumbers);
+        lottoset.calculateLottoResult(rewardRatio, winningNumbers);
         lottoset.printLottoResult();
 
-        lottoset.calculateRewardRatio(LOTTO_PRICE);
-        lottoset.printLottoRewardRatio();
+        rewardRatio.calculateRewardRatio(numberOfLotto, LOTTO_PRICE);
+        rewardRatio.printLottoRewardRatio();
     }
 
     private int calculateNumberOfLotto() {

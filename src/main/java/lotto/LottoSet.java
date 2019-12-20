@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LottoSet {
-    private int totalWinningReward;
-    private double winningRewardRatio;
     private List<Lotto> lottoList = new ArrayList<>();
     private HashMap<Rank, Integer> lottoResult = new HashMap<Rank, Integer>(){{
         put(Rank.FIRST, 0);
@@ -18,25 +16,29 @@ public class LottoSet {
         put(Rank.FOURTH, 0);
         put(Rank.FIFTH, 0);
     }};
+
+     public void addLotto(Lotto lotto) {
+         lottoList.add(lotto);
+     }
+
     public void printLottoSet(){
         OutputView.printLottoSet(lottoList);
     }
 
-    public void addLotto(Lotto lotto) {
-        lottoList.add(lotto);
-    }
-
-    public void calculateLottoResult(WinningNumbers winningNumbers) {
+    public void calculateLottoResult(RewardRatio rewardRatio, WinningNumbers winningNumbers) {
         for (Lotto lotto : lottoList) {
             Rank rank = calculateEachLotto(lotto, winningNumbers);
             lottoResult.put(rank, lottoResult.getOrDefault(rank, 0) + 1);
-            totalWinningReward += rank.getWinningReward();
+            rewardRatio.addReward(rank.getWinningReward());
         }
     }
 
     private Rank calculateEachLotto(Lotto lotto, WinningNumbers winningNumbers) {
         int count = lotto.lottoMatchCount(winningNumbers.getWinningNumber());
-        Rank rank = Arrays.stream(Rank.values()).filter(r -> r.getCountOfMatch() == count).findAny().get();
+        Rank rank = Arrays.stream(Rank.values())
+                .filter(r -> r.getCountOfMatch() == count)
+                .findAny()
+                .get();
         if (isThirdPlace(lotto, winningNumbers, count)){
             return rank.getThirdPlaceMatch();
         }
@@ -51,11 +53,5 @@ public class LottoSet {
         OutputView.printLottoResult(lottoResult);
     }
 
-    public void calculateRewardRatio(int LOTTO_PRICE) {
-         winningRewardRatio = totalWinningReward / (LOTTO_PRICE * lottoList.size()) * 100;
-    }
 
-    public void printLottoRewardRatio(){
-        OutputView.printRewardRatio(winningRewardRatio);
-    }
 }
