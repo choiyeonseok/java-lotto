@@ -63,4 +63,33 @@ public class InputView {
             throw new IllegalArgumentException("중복된 수 입니다. 중복 되지 않게 입력해 주세요");
         }
     }
+
+    public static Lotto inputWinningNumbers() {
+        System.out.println("당첨 번호를 입력해주세요");
+        return inputLottoNumbers();
+    }
+
+    public static int inputBonusNumber(Lotto winningNumber) {
+        scanner = new Scanner(System.in);
+        System.out.println("# 보너스 번호를 입력해 주세요");
+        try {
+            int bonus = scanner.nextInt();
+            verifyBonusNumber(bonus, winningNumber);
+            return bonus;
+        } catch (IllegalArgumentException e) {
+            System.out.println("1부터 45까지의 수를 입력해 주세요");
+        } catch (Exception e) {
+            System.out.println("숫자를 입력해주세요. ");
+        }
+        return inputBonusNumber(winningNumber);
+    }
+
+    private static void verifyBonusNumber(int bonus, Lotto winningNumber) {
+        if (bonus < LOTTO_MIN | bonus > LOTTO_MAX) {
+            throw new IllegalArgumentException();
+        }
+        if (winningNumber.hasNumber(bonus)) {
+            throw new IllegalArgumentException("당첨 번호와 중복됩니다. 다른 번호를 입력해 주세요");
+        }
+    }
 }

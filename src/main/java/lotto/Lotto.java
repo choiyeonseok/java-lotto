@@ -11,6 +11,10 @@ public class Lotto {
         this.numbers = numbers;
     }
 
+    public boolean hasNumber(int number){
+        return numbers.contains(number);
+    }
+
     @Override
     public String toString(){
         return Arrays.toString(numbers.toArray());

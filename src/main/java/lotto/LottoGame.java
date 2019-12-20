@@ -8,12 +8,20 @@ import java.util.List;
 
 public class LottoGame {
     private static final int LOTTO_PRICE = 1000;
+    List<Lotto> lottoList = new ArrayList<>();
+    WinningNumbers winningNumbers;
 
     public void play() {
         int numberOfLotto = calculateNumberOfLotto();
         System.out.println(numberOfLotto);
-        List<Lotto> lottoList = createLottoSet(numberOfLotto);
+        createLottoSet(numberOfLotto);
         OutputView.printLottoSet(lottoList);
+
+        Lotto winningNumber = InputView.inputWinningNumbers();
+        int bonusNumber = InputView.inputBonusNumber(winningNumber);
+        winningNumbers = new WinningNumbers(winningNumber, bonusNumber);
+
+
     }
 
     private int calculateNumberOfLotto() {
@@ -21,12 +29,10 @@ public class LottoGame {
         return (int) purchaseAmount / LOTTO_PRICE;
     }
 
-    private List<Lotto> createLottoSet(int numberOfLotto) {
-        List<Lotto> lottoList = new ArrayList<>();
+    private void createLottoSet(int numberOfLotto) {
         for (int i = 0; i < numberOfLotto; i++) {
             lottoList.add(InputView.inputLottoNumbers());
         }
-        return lottoList;
     }
 
 
