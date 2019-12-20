@@ -55,10 +55,12 @@ public class InputView {
         Collections.sort(numbers);
     }
 
-
     private static void verifyLottoNumber(int number, List<Integer> numbers) {
-        if (number < LOTTO_MIN | number > LOTTO_MAX | numbers.contains(number)) {
+        if (number < LOTTO_MIN | number > LOTTO_MAX) {
             throw new IllegalArgumentException();
+        }
+        if (numbers.contains(number)) {
+            throw new IllegalArgumentException("중복된 수 입니다. 중복 되지 않게 입력해 주세요");
         }
     }
 }
