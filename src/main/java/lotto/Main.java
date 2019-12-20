@@ -5,5 +5,4 @@ public class Main {
         LottoGame game = new LottoGame();
         game.play();
     }
-
 }

@@ -2,14 +2,11 @@ package lotto;
 
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class LottoSet {
     private List<Lotto> lottoList = new ArrayList<>();
-    private HashMap<Rank, Integer> lottoResult = new HashMap<Rank, Integer>(){{
+    private EnumMap<Rank, Integer> lottoResult = new EnumMap<Rank, Integer>(Rank.class){{
         put(Rank.FIRST, 0);
         put(Rank.SECOND, 0);
         put(Rank.THIRD, 0);
