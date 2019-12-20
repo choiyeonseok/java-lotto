@@ -24,8 +24,8 @@ public class LottoGame {
         lottoset.calculateLottoResult(winningNumbers);
         lottoset.printLottoResult();
 
-        lottoset.calculateRewardRatio();
-
+        lottoset.calculateRewardRatio(LOTTO_PRICE);
+        lottoset.printLottoRewardRatio();
     }
 
     private int calculateNumberOfLotto() {
@@ -44,6 +44,5 @@ public class LottoGame {
         int bonusNumber = InputView.inputBonusNumber(winningNumber);
         winningNumbers = new WinningNumbers(winningNumber, bonusNumber);
     }
-
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class LottoSet {
     private int totalWinningReward;
+    private double winningRewardRatio;
     private List<Lotto> lottoList = new ArrayList<>();
     private HashMap<Rank, Integer> lottoResult = new HashMap<Rank, Integer>(){{
         put(Rank.FIRST, 0);
@@ -29,6 +30,7 @@ public class LottoSet {
         for (Lotto lotto : lottoList) {
             Rank rank = calculateEachLotto(lotto, winningNumbers);
             lottoResult.put(rank, lottoResult.getOrDefault(rank, 0) + 1);
+            totalWinningReward += rank.getWinningReward();
         }
     }
 
@@ -47,5 +49,13 @@ public class LottoSet {
 
     public void printLottoResult(){
         OutputView.printLottoResult(lottoResult);
+    }
+
+    public void calculateRewardRatio(int LOTTO_PRICE) {
+         winningRewardRatio = totalWinningReward / (LOTTO_PRICE * lottoList.size()) * 100;
+    }
+
+    public void printLottoRewardRatio(){
+        OutputView.printRewardRatio(winningRewardRatio);
     }
 }
