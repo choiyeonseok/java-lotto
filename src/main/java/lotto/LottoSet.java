@@ -3,12 +3,20 @@ package lotto;
 import view.OutputView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class LottoSet {
-    List<Lotto> lottoList = new ArrayList<>();
-    HashMap<Integer, Integer> lottoResult = new HashMap<>();
+    private int totalWinningReward;
+    private List<Lotto> lottoList = new ArrayList<>();
+    private HashMap<Rank, Integer> lottoResult = new HashMap<Rank, Integer>(){{
+        put(Rank.FIRST, 0);
+        put(Rank.SECOND, 0);
+        put(Rank.THIRD, 0);
+        put(Rank.FOURTH, 0);
+        put(Rank.FIFTH, 0);
+    }};
     public void printLottoSet(){
         OutputView.printLottoSet(lottoList);
     }
@@ -19,23 +27,22 @@ public class LottoSet {
 
     public void calculateLottoResult(WinningNumbers winningNumbers) {
         for (Lotto lotto : lottoList) {
-            calculateEachLotto(lotto, winningNumbers);
+            Rank rank = calculateEachLotto(lotto, winningNumbers);
+            lottoResult.put(rank, lottoResult.getOrDefault(rank, 0) + 1);
         }
     }
 
-    private void calculateEachLotto(Lotto lotto, WinningNumbers winningNumbers) {
+    private Rank calculateEachLotto(Lotto lotto, WinningNumbers winningNumbers) {
         int count = lotto.lottoMatchCount(winningNumbers.getWinningNumber());
-        if (count >= 3) {
-            lottoResult.put(count, lottoResult.getOrDefault(count, 0) + 1);
-            return;
+        Rank rank = Arrays.stream(Rank.values()).filter(r -> r.getCountOfMatch() == count).findAny().get();
+        if (isThirdPlace(lotto, winningNumbers, count)){
+            return rank.getThirdPlaceMatch();
         }
-        if (isSecondPlace(lotto, winningNumbers, count)){
-            lottoResult.put(7, lottoResult.getOrDefault(7, 0) + 1);
-        }
+        return rank;
     }
 
-    private boolean isSecondPlace(Lotto lotto, WinningNumbers winningNumbers, int count) {
-        return count == 5 && lotto.hasNumber(winningNumbers.getBonusNumber());
+    private boolean isThirdPlace(Lotto lotto, WinningNumbers winningNumbers, int count) {
+        return count == 5 && !lotto.hasNumber(winningNumbers.getBonusNumber());
     }
 
     public void printLottoResult(){

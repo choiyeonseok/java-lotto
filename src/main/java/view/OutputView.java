@@ -1,6 +1,7 @@
 package view;
 
 import lotto.Lotto;
+import lotto.Rank;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +13,10 @@ public class OutputView {
         }
     }
 
-    public static void printLottoResult(HashMap<Integer, Integer> lottoResult) {
-        for (Integer key : lottoResult.keySet()){
-            System.out.println(key + "개 맞춘 로또 수 : " + lottoResult.get(key));
+    public static void printLottoResult(HashMap<Rank, Integer> lottoResult) {
+        System.out.println("##당첨 결과");
+        for (Rank key : lottoResult.keySet()){
+            System.out.println(key.showResultMessage(lottoResult.get(key)));
         }
     }
 }

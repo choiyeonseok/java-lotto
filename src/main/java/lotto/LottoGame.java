@@ -19,9 +19,13 @@ public class LottoGame {
         int numberOfLotto = calculateNumberOfLotto();
         createLottoSet(numberOfLotto);
         lottoset.printLottoSet();
+
         createWinningNumbers();
         lottoset.calculateLottoResult(winningNumbers);
         lottoset.printLottoResult();
+
+        lottoset.calculateRewardRatio();
+
     }
 
     private int calculateNumberOfLotto() {
