@@ -7,13 +7,16 @@ import view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class LottoGame {
+
+    private static final int START_INDEX = 0;
+
     public void play() {
         Money money = inputPurchaseAmountWithValidation();
         LottoCount lottoCount = inputLottoCountWithValidation(money);
 
-        Lottos lottos = buyManualLottos(lottoCount);
-        LottoMachine.buyAutoLottos(lottos, lottoCount);
+        Lottos lottos = buyTotalLottosWithValidation(lottoCount);
         OutputView.printLottos(lottoCount, lottos);
         WinningNumber winningNumber = inputWinningNumberWithValidation();
 
@@ -22,12 +25,17 @@ public class LottoGame {
         OutputView.printProfitRatio(money.calculateProfitRatio(lottoResult));
     }
 
-    private Lottos buyManualLottos(LottoCount lottoCount) {
-        List<Lotto> lottos = new ArrayList<>();
-        for (int index = 0; index < lottoCount.getManualCount(); index++) {
-            lottos.add(inputManualNumbersWithValidation());
+    private Lottos buyTotalLottosWithValidation(LottoCount lottoCount) {
+        try {
+            List<int[]> manualLottoInputs = new ArrayList<>();
+            for (int index = START_INDEX; index < lottoCount.getManualCount(); index++) {
+                manualLottoInputs.add(InputView.inputManualLottoNumbers());
+            }
+            return LottoMachine.buyLottos(manualLottoInputs, lottoCount);
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return buyTotalLottosWithValidation(lottoCount);
         }
-        return new Lottos(lottos);
     }
 
     private static LottoCount inputLottoCountWithValidation(Money money) {
@@ -45,16 +53,6 @@ public class LottoGame {
         } catch (IllegalArgumentException | NullPointerException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return inputPurchaseAmountWithValidation();
-        }
-    }
-
-    private static Lotto inputManualNumbersWithValidation() {
-        try {
-            LottoGenerator lottoGenerator = new ManualLottoGenerator(InputView.inputManualLottoNumbers());
-            return lottoGenerator.generateLotto();
-        } catch (IllegalArgumentException | NullPointerException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return inputManualNumbersWithValidation();
         }
     }
 
