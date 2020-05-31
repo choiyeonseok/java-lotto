@@ -23,7 +23,7 @@ class LottoNumberTest {
     @ValueSource(ints = {1, 2, 3, 42, 43, 44, 45})
     public void allNumbers(int number) {
         LottoNumber lottoNumber = LottoNumber.from(number);
-        assertThat(lottoNumber).isEqualTo(new LottoNumber(number));
+        assertThat(lottoNumber).isEqualTo(LottoNumber.from(number));
     }
 
 }

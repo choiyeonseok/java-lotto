@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class LottoNumber {
+public class LottoNumber implements Comparable<LottoNumber> {
     private static final int MIN_LOTTO_NUMBER = 1;
     private static final int MAX_LOTTO_NUMBER = 45;
     private static final Map<Integer, LottoNumber> ALL_LOTTO_NUMBERS = new HashMap<>();
@@ -17,7 +17,7 @@ public class LottoNumber {
 
     private final int number;
 
-    public LottoNumber(final int number) {
+    private LottoNumber(final int number) {
         this.number = number;
     }
 
@@ -43,5 +43,13 @@ public class LottoNumber {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    @Override
+    public int compareTo(final LottoNumber lottoNumber) {
+        if (number > lottoNumber.number) {
+            return 1;
+        }
+        return -1;
     }
 }
