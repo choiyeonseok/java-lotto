@@ -1,13 +1,11 @@
 package lotto.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class LottoNumberTest {
 
@@ -16,7 +14,7 @@ class LottoNumberTest {
     @ValueSource(ints = {-1, 0, 46, 100})
     public void overLottoRange(int number) {
         assertThatThrownBy(() -> {
-            LottoNumber lottoNumber = LottoNumber.of(number);
+            LottoNumber lottoNumber = LottoNumber.from(number);
         }).isInstanceOf(NotLottoRangeException.class);
     }
 
@@ -24,7 +22,7 @@ class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 42, 43, 44, 45})
     public void allNumbers(int number) {
-        LottoNumber lottoNumber = LottoNumber.of(number);
+        LottoNumber lottoNumber = LottoNumber.from(number);
         assertThat(lottoNumber).isEqualTo(new LottoNumber(number));
     }
 

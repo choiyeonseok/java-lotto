@@ -1,8 +1,8 @@
 package lotto.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.google.common.collect.Lists;
+
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class LottoNumber {
@@ -21,11 +21,15 @@ public class LottoNumber {
         this.number = number;
     }
 
-    public static LottoNumber of(final int number) {
+    public static LottoNumber from(final int number) {
         if (ALL_LOTTO_NUMBERS.containsKey(number)) {
             return ALL_LOTTO_NUMBERS.get(number);
         }
         throw new NotLottoRangeException();
+    }
+
+    public static List<LottoNumber> getAllLottoNumbers() {
+        return Lists.newArrayList(ALL_LOTTO_NUMBERS.values());
     }
 
     @Override
