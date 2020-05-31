@@ -21,14 +21,9 @@ class LottoFactoryTest {
     @DisplayName("수동 로또 생성")
     @Test
     public void manualCreate() {
-        final List<LottoNumber> lottoNumbers =
+        final List<Integer> lottoNumbers =
                 Lists.newArrayList(Arrays.asList(
-                        LottoNumber.from(1),
-                        LottoNumber.from(10),
-                        LottoNumber.from(15),
-                        LottoNumber.from(21),
-                        LottoNumber.from(23),
-                        LottoNumber.from(40)
+                        1, 11, 15, 21, 23, 40
                 ));
         Lotto lotto = LottoFactory.create(lottoNumbers);
         assertThat(lotto.getLottoNumbers()).hasSize(6);

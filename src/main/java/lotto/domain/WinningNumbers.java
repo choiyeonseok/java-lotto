@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WinningNumbers {
     private final Lotto winningLotto;
@@ -14,8 +15,10 @@ public class WinningNumbers {
         this.bonusNumber = LottoNumber.from(bonusNumber);
     }
 
-    public static WinningNumbers of(final List<LottoNumber> lottoNumbers, final int bonusNumber) {
-        return new WinningNumbers(lottoNumbers, bonusNumber);
+    public static WinningNumbers of(final List<Integer> lottoNumbers, final int bonusNumber) {
+        return new WinningNumbers(lottoNumbers.stream()
+                .map(LottoNumber::from)
+                .collect(Collectors.toList()), bonusNumber);
     }
 
     public LottoRank calculateMatchResult(final Lotto lotto) {

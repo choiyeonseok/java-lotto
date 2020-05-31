@@ -1,7 +1,6 @@
 package lotto.domain;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static lotto.domain.LottoFactory.LOTTO_SIZE;
 
@@ -13,7 +12,15 @@ public class Lotto {
         if (lottoNumbers.size() != LOTTO_SIZE) {
             throw new InvalidLottoSizeException();
         }
+        if (isDuplicated(lottoNumbers)) {
+            throw new DuplicatedLottoNumberException();
+        }
         this.lottoNumbers = lottoNumbers;
+    }
+
+    private boolean isDuplicated(final List<LottoNumber> lottoNumbers) {
+        Set<LottoNumber> lottoSet = new HashSet<>(lottoNumbers);
+        return !Objects.equals(lottoSet.size(), lottoNumbers.size());
     }
 
     public static Lotto from(final List<LottoNumber> lottoNumbers) {

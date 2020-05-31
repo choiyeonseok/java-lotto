@@ -16,7 +16,9 @@ public class LottoFactory {
                 .collect(Collectors.toList()));
     }
 
-    public static Lotto create(final List<LottoNumber> lottoNumbers) {
-        return Lotto.from(lottoNumbers);
+    public static Lotto create(final List<Integer> lottoNumbers) {
+        return Lotto.from(lottoNumbers.stream()
+                .map(LottoNumber::from)
+                .collect(Collectors.toList()));
     }
 }
