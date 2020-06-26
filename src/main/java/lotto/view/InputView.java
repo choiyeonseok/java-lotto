@@ -30,9 +30,9 @@ public class InputView {
     }
 
     public static List<Integer> inputLottoNumbers() {
-        System.out.println("수동으로 구매할 로또 번호를 입력해주세요.");
-        String[] inputs = SCANNER.nextLine().split(",");
         try {
+            System.out.println("수동 로또 번호를 입력해주세요.");
+            String[] inputs = SCANNER.nextLine().split(",");
             return Arrays.stream(inputs)
                     .map(Integer::parseInt)
                     .collect(Collectors.toList());

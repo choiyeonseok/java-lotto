@@ -41,10 +41,12 @@ public class LottoController {
             IntStream.range(0, autoLottoCount)
                     .forEach(i -> lottos.add(LottoFactory.create()));
 
-            IntStream.range(0, amount / LOTTO_PRICE - autoLottoCount)
-                    .forEach(i -> lottos.add(LottoFactory.create(
-                            InputView.inputLottoNumbers()
-                    )));
+            IntStream.range(0, (amount / LOTTO_PRICE) - autoLottoCount)
+                    .forEach(i -> {
+                        lottos.add(LottoFactory.create(
+                                InputView.inputLottoNumbers()
+                        ));
+                    });
             return new Lottos(lottos);
         } catch (IllegalArgumentException e) {
             return createLottos(amount, autoLottoCount);
