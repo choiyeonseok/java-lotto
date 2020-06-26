@@ -23,7 +23,7 @@ public class LottoResult {
 
     public double calculateProfit(final int count) {
         return (double) (result.keySet().stream()
-                .mapToLong(LottoRank::getWinningMoney)
+                .mapToLong(rank -> rank.getWinningMoney() * result.get(rank))
                 .sum() / (count * LOTTO_PRICE));
     }
 

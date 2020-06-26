@@ -41,6 +41,7 @@ class LottosTest {
                 LottoFactory.create(),
                 LottoFactory.create()
         ));
+        assertThat(lottos.getLottos()).hasSize(3);
         assertThat(lottos.count()).isEqualTo(3);
     }
 

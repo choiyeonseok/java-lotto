@@ -39,6 +39,7 @@ class LottoResultTest {
         LottoResult result = lottos.calculateResult(winningNumbers);
         double profit = result.calculateProfit(lottos.count());
 
+        assertThat(result.getResult()).isNotNull();
         assertThat(profit).isEqualTo((double)(230_050_000/3_000));
     }
 

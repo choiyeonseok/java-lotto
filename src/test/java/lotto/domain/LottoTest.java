@@ -11,6 +11,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LottoTest {
 
+    @DisplayName("로또 번호가 중복될 경우 예외 발생")
+    @Test
+    void duplicationLottoNumber() {
+        assertThatThrownBy(() -> {
+            Lotto lotto = Lotto.from(Arrays.asList(
+                    LottoNumber.from(1),
+                    LottoNumber.from(2),
+                    LottoNumber.from(3),
+                    LottoNumber.from(4),
+                    LottoNumber.from(5),
+                    LottoNumber.from(5)
+            ));
+        }).isInstanceOf(DuplicatedLottoNumberException.class);
+    }
+
     @DisplayName("로또가 정상적으로 만들어지지 않을 경우 예외 발생")
     @Test
     public void constructWithInvalidAttributes() {
