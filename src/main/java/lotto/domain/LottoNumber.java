@@ -15,9 +15,9 @@ public class LottoNumber implements Comparable<LottoNumber> {
                 .forEach(i -> ALL_LOTTO_NUMBERS.put(i, new LottoNumber(i)));
     }
 
-    private final int number;
+    private int number;
 
-    private LottoNumber(final int number) {
+    public LottoNumber(final int number) {
         this.number = number;
     }
 
@@ -33,28 +33,10 @@ public class LottoNumber implements Comparable<LottoNumber> {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final LottoNumber that = (LottoNumber) o;
-        return number == that.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number);
-    }
-
-    @Override
     public int compareTo(final LottoNumber lottoNumber) {
         if (number > lottoNumber.number) {
             return 1;
         }
         return -1;
-    }
-
-    @Override
-    public String toString() {
-        return "" + number;
     }
 }
